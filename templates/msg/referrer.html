@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block page_title %}Direct Linking{% endblock %}
+
+{% block content %}
+
+    <h2>
+        Direct Linking Disabled
+    </h2>
+
+    <p>
+        To help reduce abuse, I prevent external direct linking to MIME parts. You
+        can preview the part <a href="/msg/{{ part.code }}#part-{{ part.id_underscored }}">here</a>.
+        If you're using a browser addon which fakes referrer headers, that might also be
+        causing the problem.<br>
+        <br>
+        <a href="/msg/{{ part.code }}#part-{{ part.id_underscored }}">Continue...</a>
+    </p>
+{% endblock %}

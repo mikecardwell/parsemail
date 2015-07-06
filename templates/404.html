@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block page_title %}Not Found{% endblock %}
+
+{% block content %}
+
+    <h2>Page Not Found</h2>
+
+    <span id="error" class="error">
+        404!
+    </span>
+
+    {% if msg %}
+        <p id="msg">
+            {{ msg }}
+        </p>
+    {% endif %}
+
+    <style>
+        #mag {
+            margin:1em;
+        }
+        #error {
+            line-height:    2;
+            font-size:      15vmin;
+            font-weight:    bold;
+        }
+    </style>
+
+{% endblock content %}

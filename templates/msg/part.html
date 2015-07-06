@@ -1,0 +1,126 @@
+{% load app_filters %}
+
+<div class="part show" id="part-{{ part.id_underscored }}">
+    <h2 class="link">
+        <a href="#part-{{ part.id_underscored }}" title="Permalink to part {{ part.id }}">
+            {% if part.has_filename %}
+                {{ part.filename|wbr }}
+            {% else %}
+                {{ part.content_type|wbr }}
+            {% endif %}
+        </a>
+        <a class="part-id" href="#part-{{ part.id_underscored }}" title="Permalink to part {{ part.id }}">{{ part.id }}</a>
+
+        {% if part.next %}
+            <a class="next" href="#part-{{ part.next.id_underscored }}" title="Next part"></a>
+        {% endif %}
+        {% if part.prev %}
+            <a class="prev" href="#part-{{ part.prev.id_underscored }}" title="Previous part"></a>
+        {% else %}
+            <a class="prev" href="#structure" title="MIME Structure"></a>
+        {% endif %}
+    </h2>
+
+    <div class="options">
+        <h3>Options:</h3>
+        <a href="{{ part.url }}.headers">View raw headers</a>
+        {% if part.has_body %}
+            {% if part.is_html %}
+                <a href="{{ part.url }}"     title="View as image">View body as image</a>
+                <a href="{{ part.url }}.txt" title="View as text">View body as text</a>
+            {% else %}
+                <a href="{{ part.url }}" title="Download part">Download ({{ part.body_size|bytes_to_human }})</a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="headers">
+        <h3>Headers:</h3>
+        <table>
+            <tbody>
+                {% for header in part.headers %}
+                    <tr>
+                        <td>{{ header.name|wbr }}</td>
+                        <td>{{ header.value|text_to_nice_html }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+ 
+    {% if part.has_preamble %}
+        <div class="preamble">
+            <h3>Preamble:</h3>
+            <p>{{ part.preamble|text_to_nice_html }}</p>
+        </div>
+    {% endif %}
+
+    {% if part.has_body and part.is_previewable %}
+        <div class="body">
+            {% if part.is_html %}
+                <h3>HTML Body:</h3>
+                Rendered as an image using webkit. Click image to see raw HTML source<br>
+            {% elif part.is_image %}
+                <h3>Image Body:</h3>
+                {% if part.image.error %}
+                    {{ part.image.error|wbr }}
+                {% else %}
+                    {{ part.image.width }} x {{ part.image.height }} {{ part.image.content_type }}<br>
+                {% endif %}
+            {% elif not part.is_zipfile %}
+                <h3>Body</h3>
+            {% endif %}
+
+            {% if part.is_zipfile %}
+                <h3>Zip file:</h3>
+                {% if part.zipfile_error %}
+                    <div class="text error">{{ part.zipfile_error }}</div>
+                {% else %}
+                    <table class="zipfile">
+                        <thead>
+                            <tr>
+                                <td>Filename</td>
+                                <td>Size</td>
+                                <td>Timestamp</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in part.zipfile_contents %}
+                                <tr>
+                                    <td>{{ item.filename|wbr_path }}</td>
+                                    <td>{{ item.file_size|bytes_to_human }}</td>
+                                    <td>{{ item.date_time|date:'Y-M-d H:i:s O' }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            {% elif part.is_image or part.is_html %}
+                <a href="{{ part.url }}{% if part.is_html %}.txt{% endif %}" title="Open in full window">
+                    <img src="{{ part.url }}" alt="{% if part.is_html %}View source{% else %}Image attachment{% endif %}" style="max-width:{{ part.image.width }}px; max-height:{{ part.image.height }}px">
+                </a>
+            {% elif part.is_text %}
+                <div class="text">{{ part.body_text|text_to_nice_html }}</div>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if part.has_epilogue %}
+        <div class="epilogue">
+            <h3>Epilogue:</h3>
+            <p>{{ part.epilogue|text_to_nice_html }}</p>
+        </div>
+    {% endif %}
+
+    {% if part.has_children %}
+        <ul class="children">
+            {% for child in part.children %}
+                <li>
+                    {% with child as part %}
+                        {% include "msg/part.html" %}
+                    {% endwith %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>

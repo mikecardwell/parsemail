@@ -1,0 +1,71 @@
+<!doctype html>
+<!--
+
+    This site was written using Python3, Django 1.7, HTML, CSS, JavaScript
+    and vi. It is hosted using Debian GNU/Linux and Nginx on a Digital
+    Ocean VPS.
+
+    Want to hire the guy who did all this? You're in luck:
+
+    https://hireme.grepular.com
+
+-->
+
+<html lang="en-gb">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>{% block page_title %}{% endblock %} | ParseMail</title>
+
+        <script src="/js/common.js" defer></script>{% block js %}
+        {% endblock %}
+{% block css %}{% include "css.html" %}
+{% endblock css %}    </head>
+    <body>
+
+        <header>
+
+            <h1>
+                <a href="/" title="Take me home">ParseMail</a>
+            </h1>
+
+            <nav>
+                <a href="/" title="Home">Home</a>
+                <a href="/about" title="About this site">About</a>
+                <a href="/privacy" title="Privacy Policy">Privacy</a>
+                <a href="https://grepular.com/contact" title="Contact me">Contact</a>
+            </nav>
+
+        </header>
+
+        <main>
+
+            <!--[if lte IE 9]>
+                <p style="color:red;width:100%;padding:2em 1em;">
+                    Although mostly functional, this site looks terrible on Internet Explorer
+                    versions prior to IE10. I'm not going to spend the extra time required to
+                    support old browsers. It looks fine on modern versions of Firefox, Chromium,
+                    Opera, Safari, Android browser, iOS and IE10+. That's good enough for me.<br>
+                    <br>
+                    Give <a href="https://getfirefox.com/" style="color:inherit">Firefox</a>
+                    a try.
+                </p>
+            <![endif]-->
+            {% block content %}{% endblock %}
+
+        </main>
+
+        <footer>
+
+            <span>
+                Website idea, design, implementation and hosting by <a href="https://grepular.com" title="My website">Mike Cardwell</a>.
+                Want to hire me? <a href="https://hireme.grepular.com" title="My &quot;Hire Me&quot; page">Please&#160;do</a>
+            </span>
+
+        </footer>
+
+    </body>
+
+</html>

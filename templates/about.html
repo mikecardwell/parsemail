@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block page_title    %}About{% endblock %}
+
+{% block content %}
+
+    <h2 class="link">
+        <a href="/about" title="About page">About this Website</a>
+    </h2>
+
+    <p>
+        Paste the raw source of an email into the form on the front page. The
+        email will then be parsed, decoded, separated into it's various MIME
+        parts, and displayed in an easy to view fashion. Image attachments will
+        be displayed as images. HTML parts will be rendered in webkit (with
+        javascript and plugins disabled) and then also displayed as
+        an image. IP addresses in headers and message bodies will be identified
+        and highlighted along with a flag representing their origin country.
+        Hostnames and email addresses will also be identified and&#160;highlighted.<br>
+        <br>
+        What's the point? If you run email systems for a living, you may find this
+        useful as tool for quickly identifying important information in emails you
+        find in your message queues and&#160;mailboxes.<br>
+        <br>
+        You may wish to read the sites
+        <a href="/privacy">privacy policy</a> too; I tried to keep it short
+        and&#160;informative.<br>
+        <br>
+        P.S. Did I mention I'm <a href="https://hireme.grepular.com">looking for a&#160;job?</a>
+    </p>
+
+{% endblock content %}

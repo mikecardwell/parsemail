@@ -1,0 +1,18 @@
+        <noscript>
+            <link rel="stylesheet" type="text/css" href="/css/common.css">{% for uri in css.split %}
+            <link rel="stylesheet" type="text/css" href="{{ uri }}">{% endfor %}
+            <link rel="stylesheet" type="text/css" href="/fonts/font.css">
+        </noscript>
+        <script>
+            (function(p,s,t){
+                "/css/common.css {{ css }} /fonts/font.css".split(/\s+/).forEach(function(u,l,f){
+                    l=document.createElement('link');l.rel='stylesheet';l.href=u;l.media='only x';
+                    p.parentNode.insertBefore(l,p);
+                    f=function(){
+                        if(Date.now()>t)return l.media='all';
+                        for(var i=0;i<s.length;++i)if(s[i].href==l.href)return l.media='all';
+                        setTimeout(f,16)
+                    };f()
+                })
+            })(document.querySelector('head>noscript'),document.styleSheets,Date.now()+6666)
+        </script>

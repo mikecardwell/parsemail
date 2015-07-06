@@ -1,0 +1,97 @@
+<!doctype html>
+<!--
+
+    This site was written using Python3, Django 1.7, HTML, CSS, JavaScript
+    and vi. It is hosted using Debian GNU/Linux and Nginx on a Digital
+    Ocean VPS.
+
+    Want to hire the guy who did all this? You're in luck:
+
+    https://hireme.grepular.com
+
+-->
+<html lang="en-GB">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <title>Internal Server Error | ParseMail</title>
+
+        <!-- I know JavaScript very well, but I used it very sparingly
+             in this project as I didn't want it to be a dependency. -->
+
+        <script src="/js/common.js" defer></script>
+        
+        <!-- Neat performance trick for loading CSS asynchronously -->
+
+        <noscript>
+            <link rel="stylesheet" type="text/css" href="/css/common.css">
+            <link rel="stylesheet" type="text/css" href="/fonts/font.css">
+        </noscript>
+        <script>
+            (function(p,s,t){
+                "/css/common.css  /fonts/font.css".split(/\s+/).forEach(function(u,l,f){
+                    l=document.createElement('link');l.rel='stylesheet';l.href=u;l.media='only x';
+                    p.parentNode.insertBefore(l,p);
+                    f=function(){
+                        if(Date.now()>t)return l.media='all';
+                        for(var i=0;i<s.length;++i)if(s[i].href==l.href)return l.media='all';
+                        setTimeout(f,16)
+                    };f()
+                })
+            })(document.querySelector('head>noscript'),document.styleSheets,Date.now()+6000)
+        </script>
+
+    </head>
+
+    <body>
+
+        <header>
+
+            <h1>
+                <a href="/" title="Take me home">parsemail.org</a>
+            </h1>
+
+            <nav>
+                <a href="/about" title="About this site">About</a>
+                <a href="/privacy" title="Privacy Policy">Privacy</a>
+                <a href="https://grepular.com/contact" title="Contact me">Contact</a>
+            </nav>
+
+        </header>
+
+        <main>
+
+            
+
+    <h2>Internal Server Error</h2>
+
+    <span id="error" class="error">
+        500!
+    </span>
+
+    <style>
+        #error {
+            line-height:    2;
+            font-size:      15vmin;
+            font-weight:    bold;
+        }
+    </style>
+
+
+
+        </main>
+
+        <footer>
+
+            <span>
+                Website idea, design, implementation and hosting by <a href="https://grepular.com" title="My website">Mike Cardwell</a>.
+                Want to hire me? <a href="https://hireme.grepular.com" title="My &quot;Hire Me&quot; page">Please&#160;do</a>
+            </span>
+
+        </footer>
+
+    </body>
+
+</html>

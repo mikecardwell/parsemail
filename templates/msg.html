@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block page_title %}Email {{ msg.code }}{% endblock %}
+
+{% block css %}
+{% with "/css/msg.css" as css %}{% include "css.html" %}{% endwith %}
+{% endblock %}
+
+{% block content %}
+
+    {% if error %}
+        
+        <p>
+            {{ error }}
+        </p>
+
+    {% endif %}
+
+    <div id="msg">
+
+        <table class="info">
+            <tbody>
+                <tr>
+                    <td>Submitted:</td>
+                    <td>{{ msg.ctime|timesince }} ago</td>
+                </tr>
+                <tr>
+                    <td>Expires in:</td>
+                    <td>{{ msg.dtime|timeuntil }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        {% with msg.part as part %}
+            <div class="structure" id="structure">
+                <h2 class="link">
+                    <a href="#structure" title="Permalink to the message structure">MIME Structure</a>
+                    <a class="prev" href="#top" title="Top of the page"></a>
+                    <a class="next" href="#part-{{ msg.id_underscored }}" title="First part"></a>
+                </h2>
+                <a href="/msg/{{ msg.code }}/raw">View Raw Source</a><br>
+                <br>
+                {% include "msg/structure.html" %}
+            </div>
+            {% include "msg/part.html" %}
+        {% endwith %}
+    </div>
+
+{% endblock content %}
