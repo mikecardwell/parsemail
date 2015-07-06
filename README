@@ -15,37 +15,42 @@ Dockerfile at some point to make things a little easier.
 
 Requirements: Python 3, Django 1.7
 
-1.) Clone the repo
+1.) Install dependencies. Debian method:
+
+    apt-get install python3-pip python3-django python3-wand python3-geoip
+    pip3 install flup-py3
+
+2.) Clone the repo
 
     git clone https://github.com/mikecardwell/parsemail
     cd parsemail
 
-2.) Create the dir where uploaded emails will be stored.
+3.) Create the dir where uploaded emails will be stored.
 
     mkdir emails
 
-2.) Install bourbon in the resources dir *if* you wish to modify the CSS
+4.) Install bourbon in the resources dir *if* you wish to modify the CSS
     This is totally optional.
 
     cd resources
     bourbon install
     cd ..
 
-3.) Set SECRET_KEY, ADMINS and ALLOWED_HOSTS in parsemail/settings.py
+5.) Set SECRET_KEY, ADMINS and ALLOWED_HOSTS in parsemail/settings.py
 
-4.) Download the Mozilla public suffix list. This is used to help us identify
+6.) Download the Mozilla public suffix list. This is used to help us identify
     domains/urls/email addresses in the emails. Cron this to run weekly
 
     ./scripts/publicsuffic.py
 
-5.) Cron this script to run every minute. It's the script responsible for
+7.) Cron this script to run every minute. It's the script responsible for
     removing expired emails
 
     ./scripts/expire.py
 
-6.) Run the app. For example, to listen on tcp port 8000 with a fastcgi service:
+8.) Run the app. For example, to listen on tcp port 8000 with a fastcgi service:
 
     ./manage.py runfcgi method=threaded host=127.0.0.1 port=8000 \
             pidfile=/wherever/you/want/this/fcgi.pid
 
-7.) Now point Nginx or Apache or whatever your favourite webserver is at it
+9.) Now point Nginx or Apache or whatever your favourite webserver is at it
