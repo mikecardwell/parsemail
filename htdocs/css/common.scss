@@ -157,6 +157,11 @@ body > header {
                 background-image:   url('/images/github.svg');
                 background-repeat:  no-repeat;
                 background-size:    100%;
+                @include breakpoint(phone) {
+                    position:   absolute;
+                    top:        0.5em;
+                    right:      0;
+                }
             }
         }
     }
