@@ -241,14 +241,24 @@ class MIMEPart:
         return self.content_type() == 'text/html'
 
     def is_text(self):
-        return self.content_type().startswith('text/') \
-                or self.content_type() in [
-                    'image/svg+xml',
-                    'application/xml',
-                    'application/javascript',
-                    'application/x-javascript',
-                    'application/pgp-signature',
-                ]
+        if self.content_type().startswith('text/'):
+            return True
+
+        if self.content_type() in [
+                'image/svg+xml',
+                'application/xml',
+                'application/javascript',
+                'application/x-javascript',
+                'application/pgp-signature',
+                'application/pgp-encrypted',
+            ]: return True
+
+        if self.content_type() == 'application/octet-stream' and \
+                self.has_parent() and \
+                self.parent().content_type() == 'multipart/encrypted':
+            return True
+
+        return False
 
     def is_previewable(self):
         return self.is_text() or self.is_image() or self.is_zipfile()
