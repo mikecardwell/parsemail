@@ -37,10 +37,17 @@ body > main > form {
         margin:             0;
         padding:            0;
         width:              100%;
-       
+      
+        button {
+            width: 10em;
+        }
+
         @include media('max-width:450px') {
             @include flex-direction(column);
             @include align-items(center);
+            select, button {
+                width:  12em;
+            }
         }
 
         > * {
@@ -57,11 +64,6 @@ body > main > form {
                     top:        1.2em;
                     left:       0.1em;
                 }
-            }
-
-            &.submit button {
-                width:10em;
-
             }
         }
     }

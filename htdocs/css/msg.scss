@@ -94,15 +94,22 @@ body > main {
     }
 
     > .info {
-        @include breakpoint(phone) {
-            margin: 2em 1em 0 1em;
-        }
 
         h2 {
-            background-color:       #060;
+            background-color: #060;
+            margin:           0;
+        }
+
+        table {
+            margin-top:     1em;
+            @include breakpoint (phone) {
+                margin-left:  1em;
+                margin-right: 1em;
+            }
         }
 
         td {
+            line-height:    1.6;
             &:not(:first-child) {
                 @include word-wrap;
             }
@@ -114,6 +121,11 @@ body > main {
                     padding: 0 0 0 1.5em;
                 }
             }
+        }
+
+        ol {
+            margin:         0;
+            padding-left:   2em;
         }
 
         .ip.flag::after {
@@ -236,11 +248,23 @@ body > main {
     }
     
     .translate {
-        form { @include display(flex) };
-        margin-top:         1em;
+        form {
+            @include display(flex);
+            @include breakpoint (phone) {
+                @include flex-direction(column);
+                @include align-items(center);
+            }
+        };
+        margin:             1em 0;
         padding:            1em;
         background-color:   #F4F4F4;
-        button { margin-right: 2em; }
+        button {
+            width:          14em;
+            margin-right:   2em;
+            @include breakpoint (phone) {
+                margin-bottom: 1em;
+            }
+        }
     }
 
     .children {

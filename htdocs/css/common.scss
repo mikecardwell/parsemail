@@ -101,6 +101,10 @@ body > header {
     background: #333;
     padding:    1em;
 
+    @include breakpoint (phone) {
+        @include flex-direction(column);
+    }
+
     &::before {
         content:    ' ';
         position:   absolute;
@@ -142,12 +146,22 @@ body > header {
         @include align-items(center);
         margin: 0.5em 1em;
 
+        @include breakpoint (phone) {
+            width:100%;
+        }
+
         a {
             color:     #ddd;
             margin:    0 1em;
             @include text-decoration-color(#999);
             &:hover {
                 color: white;
+            }
+
+            &:not(:empty) {
+                @include breakpoint(notphone) {
+                    font-size:0.9em;
+                }
             }
 
             &[href="https://github.com/mikecardwell/parsemail"] {
@@ -157,10 +171,20 @@ body > header {
                 background-image:   url('/images/github.svg');
                 background-repeat:  no-repeat;
                 background-size:    100%;
+                border-radius:      50%;
                 @include breakpoint(phone) {
                     position:   absolute;
-                    top:        0.5em;
-                    right:      0;
+                    top:        calc(1.75em + 2vh);
+                    right:      1vw;
+                    width:      3em;
+                    height:     3em;
+                }
+                @include breakpoint(notphone) {
+                    border: 1px solid #666;
+                    &:hover {
+                        @include transition(border 0.1s linear);
+                        border: 1px solid #999;
+                    }
                 }
             }
         }
