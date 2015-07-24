@@ -139,6 +139,7 @@ body > header {
         @include display(flex);
         @include flex-grow(1);
         @include justify-content(space-around);
+        @include align-items(center);
         margin: 0.5em 1em;
 
         a {
@@ -147,6 +148,15 @@ body > header {
             @include text-decoration-color(#999);
             &:hover {
                 color: white;
+            }
+
+            &[href="https://github.com/mikecardwell/parsemail"] {
+                display:            inline-block;
+                width:              2.5em;
+                height:             2.5em;
+                background-image:   url('/images/github.svg');
+                background-repeat:  no-repeat;
+                background-size:    100%;
             }
         }
     }
@@ -367,5 +377,13 @@ button, input[type="submit"] {
     }
     &:active {
         @include linear-gradient(to top, #fefefe, #dcdcdc);
+    }
+}
+
+#email-privacy-tester {
+    padding: 0;
+    margin:  1.5em 0 0 0;
+    @include breakpoint (phone) {
+        padding: 0 1em 1.5em 1em;
     }
 }
