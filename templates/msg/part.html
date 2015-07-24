@@ -105,6 +105,19 @@
         </div>
     {% endif %}
 
+    {% if part.content_type == 'text/plain' %}
+        <div class="translate">
+            <form method="post" action="https://translate.google.com" rel="noreferrer">
+                <input type="hidden" name="text" value="{{ part.body_text }}">
+                <button>Translate Body</button>
+                <span>
+                    <strong>Warning</strong>: This will send you to <a rel="noreferrer" href="https://translate.google.com">Google Translate</a>
+                    and pre-fill the text field. So if you don't want Google seeing it, don't click this button.
+                </span>
+            </form>
+        </div>
+    {% endif %}
+
     {% if part.has_epilogue %}
         <div class="epilogue">
             <h3>Epilogue:</h3>
