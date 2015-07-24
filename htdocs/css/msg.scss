@@ -10,10 +10,11 @@ body > main {
     max-width:100%;
     min-width:80%;
 
-    .ip { background-color: white; }
+    .part {
 
-    a {
-        &.hostname, &.email, &.link {
+        .ip { background-color: white; }
+
+        span.ip, a.hostname, a.email, a.link {
             display:          inline-block;
             padding:          2px 4px;
             line-height:      1;
@@ -94,7 +95,25 @@ body > main {
 
     > .info {
         @include breakpoint(phone) {
-            margin-top: 2em;
+            margin: 2em 1em 0 1em;
+        }
+
+        h2 {
+            background-color:       #060;
+        }
+
+        td {
+            &:not(:first-child) {
+                @include word-wrap;
+            }
+
+            @include breakpoint(phone) {
+                float: left;
+                &:not(:first-child) {
+                    clear:   both;
+                    padding: 0 0 0 1.5em;
+                }
+            }
         }
     }
 
@@ -165,7 +184,6 @@ body > main {
         }
 
         h2 {
-            background-color:       #533A71;
             background-color:       #088BC3;
         }
     }

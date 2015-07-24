@@ -9,7 +9,7 @@
                 {{ part.content_type|wbr }}
             {% endif %}
         </a>
-        <a class="part-id" href="#part-{{ part.id_underscored }}" title="Permalink to part {{ part.id }}">{{ part.id }}</a>
+        <a class="part-id" href="#part-{{ part.id_underscored }}" title="Permalink to part {{ part.id }}">Part {{ part.id }}</a>
 
         {% if part.next %}
             <a class="next" href="#part-{{ part.next.id_underscored }}" title="Next part"></a>

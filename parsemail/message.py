@@ -14,6 +14,8 @@ import urllib.parse
 import wand.image
 import zipfile
 
+import parsemail.re
+
 trusted_image_types = [
     'image/jpeg',
     'image/gif',
@@ -326,6 +328,68 @@ class MIMEPart:
             return self._meta
 
         return self._meta.get(name)
+
+    def find_urls(self):
+        urls = []
+
+        ts = [ self.headers().raw() ]
+        if self.content_type() in ['text/plain', 'text/html']:
+            ts.append(self.body_text())
+
+        rx = re.compile(r"(?i)(\b" + parsemail.re.RXS_url + r"\b)")
+        for t in ts:
+            for part in rx.split(t):
+                if parsemail.re.RX_url.fullmatch(part) and \
+                        part.lower() not in (u.lower() for u in urls):
+                    urls.append(part)
+        return urls
+
+    def find_emails(self):
+        emails = []
+
+        ts = [ self.headers().raw() ]
+        if self.content_type() in ['text/plain', 'text/html']:
+            ts.append(self.body_text())
+
+        rx = re.compile(r"(?i)(\b" + parsemail.re.RXS_email + r"\b)")
+        for t in ts:
+            for part in rx.split(t):
+                if parsemail.re.RX_email.fullmatch(part):
+                    m = re.fullmatch('<(.+)>', part)
+                    email = m.group(1) if m else part
+                    if email.lower() not in (e.lower() for e in emails):
+                        emails.append(email)
+        return emails
+
+    def find_ips(self):
+        ips = []
+
+        ts = [ self.headers().raw() ]
+        if self.content_type() in ['text/plain', 'text/html']:
+            ts.append(self.body_text())
+
+        rx = re.compile(r"(?i)(\b" + parsemail.re.RXS_ip + r"\b)")
+        for t in ts:
+            for part in rx.split(t):
+                if parsemail.re.RX_ip.fullmatch(part) and \
+                        part.lower() not in (i.lower() for i in ips):
+                    ips.append(part)
+        return ips
+                
+    def find_hostnames(self):
+        hostnames = []
+
+        ts = [ self.headers().raw() ]
+        if self.content_type() in ['text/plain', 'text/html']:
+            ts.append(self.body_text())
+
+        rx = re.compile(r"(?i)(\b" + parsemail.re.RXS_hostname + r"\b)")
+        for t in ts:
+            for part in rx.split(t):
+                if parsemail.re.RX_hostname.fullmatch(part) and \
+                        part.lower() not in (h.lower() for h in hostnames):
+                    hostnames.append(part)
+        return hostnames
 
     def header(self, name):
         return self.headers().get(name)

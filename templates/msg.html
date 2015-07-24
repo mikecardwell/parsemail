@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load app_filters %}
+
 {% block page_title %}Email {{ msg.code }}{% endblock %}
 
 {% block css %}
@@ -18,24 +20,73 @@
 
     <div id="msg">
 
-        <table class="info">
-            <tbody>
-                <tr>
-                    <td>Submitted:</td>
-                    <td>{{ msg.ctime|timesince }} ago</td>
-                </tr>
-                <tr>
-                    <td>Expires in:</td>
-                    <td>{{ msg.dtime|timeuntil }}</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="info" id="info">
+
+            <h2 class="link">
+                <a href="#info" title="Permalink to the message info">Message Info</a>
+                <a class="prev" href="#top" title="Top of the page"></a>
+                <a class="next" href="#structure" title="Message structure"></a>
+            </h2>
+
+            <table class="info">
+                <tbody>
+                    <tr>
+                        <td>Submitted:</td>
+                        <td>{{ msg.ctime|timesince }} ago</td>
+                    </tr>
+                    <tr>
+                        <td>Expires in:</td>
+                        <td>{{ msg.dtime|timeuntil }}</td>
+                    </tr>
+                    {% if ips|length > 0 %}
+                    <tr>
+                        <td>IP&#160;Addresses:</td>
+                        <td>
+                            {% for ip in ips %}
+                                {{ ip|ip_html|safe }}<br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if hostnames|length > 0 %}
+                    <tr>
+                        <td>Hostnames:</td>
+                        <td>
+                            {% for hostname in hostnames %}
+                                {{ hostname|hostname_html|safe }}<br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if emails|length > 0 %}
+                    <tr>
+                        <td>Emails:</td>
+                        <td>
+                            {% for email in emails %}
+                                {{ email|email_html|safe }}<br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    {% endif %}
+                    {% if urls|length > 0 %}
+                    <tr>
+                        <td>URLs:</td>
+                        <td>
+                            {% for url in urls %}
+                                {{ url|url_html|safe }}
+                            {% endfor %}
+                        </td>
+                    </tr>                                                       
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
 
         {% with msg.part as part %}
             <div class="structure" id="structure">
                 <h2 class="link">
                     <a href="#structure" title="Permalink to the message structure">MIME Structure</a>
-                    <a class="prev" href="#top" title="Top of the page"></a>
+                    <a class="prev" href="#info" title="Message info"></a>
                     <a class="next" href="#part-{{ msg.id_underscored }}" title="First part"></a>
                 </h2>
                 <a href="/msg/{{ msg.code }}/raw">View Raw Source</a><br>

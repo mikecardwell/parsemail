@@ -55,6 +55,7 @@ def add_wbr_to_html(t):
 
     return ''.join(parts)
 
+@register.filter(name='ip_html')
 def ip_html(ip):
     if ip in ['::']:
         return ip
@@ -78,7 +79,8 @@ def ip_html(ip):
 
     return h + '>' + ip + '</span>'
 
-def url_html(data, className=None):
+@register.filter(name='url_html')
+def url_html(data, className='link'):
     url = data
     if not re.match('^[a-zA-Z]+://', url):
         url = 'http://' + url
@@ -89,6 +91,17 @@ def url_html(data, className=None):
         h += ' class="' + className + '"'
     return h + '>' + html.escape(data) + '</a>'
 
+@register.filter(name='hostname_html')
+def hostname_html(data):
+    return url_html(data, className='hostname')
+
+@register.filter(name='email_html')
+def email_html(data, keepBrackets=False):
+    m = re.fullmatch('<(.+)>', data)
+    email = m.group(1) if m else data
+    return '<a href="mailto:' + html.escape(email) + '" class="email">' \
+            + html.escape(data if keepBrackets else email) + '</a>'
+
 @register.filter(name='text_to_nice_html')
 def text_to_nice_html(t):
 
@@ -96,16 +109,13 @@ def text_to_nice_html(t):
     for part in parsemail.re.RX_all.split(t):
 
         if parsemail.re.RX_url.fullmatch(part):
-            parts.append(url_html(part, className='link'))
+            parts.append(url_html(part))
         elif parsemail.re.RX_email.fullmatch(part):
-            m = re.fullmatch('<(.+)>', part)
-            email = m.group(1) if m else part
-            parts.append('<a class="email" href="mailto:' + html.escape(email) + '">' +
-                    html.escape(part) + '</a>')
+            parts.append(email_html(part, keepBrackets=True))
         elif parsemail.re.RX_ip.fullmatch(part):
             parts.append(ip_html(part))
         elif parsemail.re.RX_hostname.fullmatch(part):
-            parts.append(url_html(part, className='hostname'))
+            parts.append(hostname_html(part))
         else:
             parts.append(html.escape(part))
 

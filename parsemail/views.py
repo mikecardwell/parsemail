@@ -97,7 +97,35 @@ def msg(request, code):
             "msg":"No such email. Either it expired, or it never existed"
         })
 
-    return render(request, 'msg.html', { 'msg': msg })
+    # Extract a bunch of information from the message. 
+    urls      = []
+    emails    = []
+    ips       = []
+    hostnames = []
+
+    for part in msg.parts():
+        urls.extend(part.find_urls())
+        emails.extend(part.find_emails())
+        ips.extend(part.find_ips())
+        hostnames.extend(part.find_hostnames())
+
+    # Dedupe and sort
+    urls      = list(set(urls))
+    urls.sort()
+    emails    = list(set(emails))
+    emails.sort()
+    ips       = list(set(ips))
+    ips.sort()
+    hostnames = list(set(hostnames))
+    hostnames.sort()
+
+    return render(request, 'msg.html', {
+        'msg':       msg,
+        'urls':      urls,
+        'emails':    emails,
+        'ips':       ips,
+        'hostnames': hostnames
+    })
 
 def msg_raw(request, code):
     """\

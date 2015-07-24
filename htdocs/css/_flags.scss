@@ -1,12 +1,6 @@
 .ip {
-    color:       #006 !important;
-    display:     inline-block;
-    padding:     2px 4px 2px 4px;
-    line-height: 1;
-    border:      1px solid #ddd;
-
     &.flag {
-        padding-right:       26px;
+        padding-right:       26px !important;
         background-repeat:   no-repeat;
         background-position: right 4px center;
 
