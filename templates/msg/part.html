@@ -105,7 +105,7 @@
         </div>
     {% endif %}
 
-    {% if part.content_type == 'text/plain' %}
+    {% if part.content_type == 'text/plain' and part.has_body %}
         <div class="translate">
             <form method="post" action="https://translate.google.com" rel="noreferrer">
                 <input type="hidden" name="text" value="{{ part.body_text }}">

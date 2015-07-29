@@ -418,8 +418,11 @@ class MIMEPart:
         return os.path.isfile(self.path() + '-body')
 
     def body(self):
-        with open(self.path() + '-body', 'rb') as fh:
-            return fh.read()
+        if self.has_body():
+            with open(self.path() + '-body', 'rb') as fh:
+                return fh.read()
+        else:
+            return b''
 
     def body_size(self):
         return os.stat(self.path() + '-body').st_size if self.has_body() else 0
