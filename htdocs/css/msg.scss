@@ -128,10 +128,21 @@ body > main {
             padding-left:   2em;
         }
 
-        .ip.flag::after {
-            margin-left: 0.7em;
-            font-size:   0.9em;
-            content:     '- ' attr(title);
+        .ip.flag, .ip.rfc1918 {
+
+            @include breakpoint(notphone) {
+                display: inline-block;
+                min-width: 25em;
+            }
+
+            &::after {
+                @include breakpoint(notphone) {
+                    float:      right;
+                }
+                margin-left: 0.7em;
+                font-size:   0.9em;
+                content:     '- ' attr(title);
+            }
         }
     }
 

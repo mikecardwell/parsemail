@@ -60,6 +60,8 @@ def ip_html(ip):
     if ip in ['::']:
         return ip
 
+    rfc1918 = re.match(r'(?:127|192|10|172\.(?:1[6-9]|2[0-9]|3[01]))\.', ip)
+
     h = '<span class="ip'
 
     c = geoip.city(ip)
@@ -69,6 +71,8 @@ def ip_html(ip):
         if os.path.isfile(parsemail.__path__[0] + \
                 '/../htdocs/images/flags/' + cc + '.gif'):
             h += ' flag'
+    elif rfc1918:
+        h += ' rfc1918'
     h += '"'
 
     if c and c.get('country_name'):
@@ -76,6 +80,8 @@ def ip_html(ip):
         if c.get('city'):
             title += ' (' + c.get('city') + ')'
         h += ' title="' + html.escape(title) + '"'
+    elif rfc1918:
+        h += ' title="RFC 1918 Private Network"'
 
     return h + '>' + ip + '</span>'
 

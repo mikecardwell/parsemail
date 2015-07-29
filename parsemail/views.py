@@ -119,6 +119,8 @@ def msg(request, code):
     hostnames = list(set(hostnames))
     hostnames.sort()
 
+    ips = list(filter(lambda ip: ip != '::', ips))
+
     return render(request, 'msg.html', {
         'msg':       msg,
         'urls':      urls,
