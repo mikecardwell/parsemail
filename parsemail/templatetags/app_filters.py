@@ -95,7 +95,7 @@ def url_html(data, className='link'):
     if not re.match('^[a-zA-Z]+://', url):
         url = 'http://' + url
 
-    h = '<a rel="nofollow noreferrer" href="' + \
+    h = '<a rel="nofollow" href="' + \
             html.escape(url) + '"'
     if className:
         h += ' class="' + className + '"'
