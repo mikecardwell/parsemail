@@ -31,8 +31,8 @@ RXS_pathname = r"(?:/" \
                   + r"(?:[a-zA-Z0-9]|%[a-fA-F0-9]{2})" \
                + r")?" \
              + r")*"
-RXS_qs   = r"(?:\?" + r"(?:[-a-zA-Z0-9._~=&;\+,!/@]|%[a-fA-F0-9]{2})*(?:[a-zA-Z0-9]|%[a-fA-F0-9]{2}))?"
-RXS_hash = r"(?:#"  + r"(?:[-a-zA-Z0-9._~=&;\+,!/@]|%[a-fA-F0-9]{2})*(?:[a-zA-Z0-9]|%[a-fA-F0-9]{2}))?"
+RXS_qs   = r"(?:\?" + r"(?:[-a-zA-Z0-9._~=&;\+,!/@:?]|%[a-fA-F0-9]{2})*(?:[a-zA-Z0-9]|%[a-fA-F0-9]{2}))?"
+RXS_hash = r"(?:#"  + r"(?:[-a-zA-Z0-9._~=&;\+,!/@:?]|%[a-fA-F0-9]{2})*(?:[a-zA-Z0-9]|%[a-fA-F0-9]{2}))?"
 RXS_url  = r"(?:(?:ht|f)tp|gopher)s?://" + \
         RXS_hostname + RXS_pathname + RXS_qs + RXS_hash
 
