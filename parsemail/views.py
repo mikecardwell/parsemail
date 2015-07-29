@@ -115,7 +115,7 @@ def msg(request, code):
     emails    = list(set(emails))
     emails.sort()
     ips       = list(set(ips))
-    ips.sort()
+    ips.sort(key=ip_sort)
     hostnames = list(set(hostnames))
     hostnames.sort()
 
@@ -128,6 +128,14 @@ def msg(request, code):
         'ips':       ips,
         'hostnames': hostnames
     })
+
+def ip_sort (ip):
+    """\
+    Helper for alphanumeric IP sorting where IPv4 always comes first
+    So:  1.2.3.4, 2.3.4.5, 1::2
+    Not: 1.2.3.4, 1::2, 2.3.4.5
+    """
+    return 'z' + ip if ':' in ip else ip
 
 def msg_raw(request, code):
     """\

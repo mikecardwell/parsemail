@@ -128,17 +128,13 @@ body > main {
             padding-left:   2em;
         }
 
-        .ip.flag, .ip.rfc1918 {
+        .ip[title] {
 
-            @include breakpoint(notphone) {
-                display: inline-block;
-                min-width: 25em;
-            }
+            display: inline-block;
+            width:   100%;
 
             &::after {
-                @include breakpoint(notphone) {
-                    float:      right;
-                }
+                float:       right;
                 margin-left: 0.7em;
                 font-size:   0.9em;
                 content:     '- ' attr(title);

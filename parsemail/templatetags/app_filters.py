@@ -60,8 +60,6 @@ def ip_html(ip):
     if ip in ['::']:
         return ip
 
-    rfc1918 = re.match(r'(?:127|192|10|172\.(?:1[6-9]|2[0-9]|3[01]))\.', ip)
-
     h = '<span class="ip'
 
     c = geoip.city(ip)
@@ -71,17 +69,23 @@ def ip_html(ip):
         if os.path.isfile(parsemail.__path__[0] + \
                 '/../htdocs/images/flags/' + cc + '.gif'):
             h += ' flag'
-    elif rfc1918:
-        h += ' rfc1918'
     h += '"'
+
+    title = None
 
     if c and c.get('country_name'):
         title = c.get('country_name')
         if c.get('city'):
             title += ' (' + c.get('city') + ')'
+    elif re.match(r'(?:127|192|10|172\.(?:1[6-9]|2[0-9]|3[01]))\.', ip):
+        title = 'RFC 1918 private network'
+    elif re.match(r'fe([89ab][0-9a-f]):', ip.lower()):
+        title = 'Link-local unicast'
+    elif re.match(r'ff[0-9a-f]{2}:', ip.lower()):
+        title = 'Multicast'
+
+    if title:
         h += ' title="' + html.escape(title) + '"'
-    elif rfc1918:
-        h += ' title="RFC 1918 Private Network"'
 
     return h + '>' + ip + '</span>'
 
